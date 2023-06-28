@@ -4,20 +4,18 @@ import './App.css';
   let k=1
 
 
-function App() {
-
-  const points = useState(0)
-  
-
-  function clickImg(){
-    i=i+k
-    points[1](i)
+  function App() {
+    const [points, setPoints] = useState(0)
+    const [k, setK] = useState(1)  
+    
+    function clickImg(){
+      setPoints(points + k)
     }
-  function upgrade(){
-    if( i >= 10){
-      k=2;
-    }
-  }  
+    function upgrade(){
+      if( points >= 10){
+        setK(2)
+      }
+    }  
     
   return (
     <div className='App'>
@@ -27,7 +25,7 @@ function App() {
       <button onClick={upgrade} className='btn-class'> Апгрейд </button>
       </div>
        <div className='points-block'>
-        Печеньки: {points[0]}
+        Печеньки: {points}
         </div>
     </div>
   );
