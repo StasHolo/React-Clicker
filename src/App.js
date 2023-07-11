@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import './App.css';
+import cookie from './cookie.webp';
   let i=0
   let k=1
 
@@ -132,7 +133,7 @@ import './App.css';
 
 
       <div><h2>Кликай на печеньку!</h2></div>
-      <img className='image-class' id='img-cookie' src='/public/cookie.webp' onClick={clickImg}></img>
+      <img className='image-class' id='img-cookie' src={cookie} onClick={clickImg}></img>
        <div className='points-block'>
         Печеньки: {points}
         </div>
