@@ -19,12 +19,30 @@ import './App.css';
     const [activeClassFarm, setActiveClassFarm] = useState('mini-discription')
     const [buttonDisabledFarm, setButtonDisabledFarm] = useState(false)
     const [k, setK] = useState(1)  
+    let y
     let interval1sid = null
     let interval5sid = null
     
     function clickImg(){
       setPoints(points + k)
+      let summ = points + k
+      localStorage.setItem('points', JSON.stringify(summ))
     }
+
+    
+
+    useEffect(() => {
+      setPoints(JSON.parse(localStorage.getItem('points')));
+
+      if (JSON.parse(localStorage.getItem('activeStatus')) === 1){
+        setK(2)
+        setButtonDisabled(true);
+        setButtonClass('btn-class-disabled');
+        setActive('Приобретено');
+        setActiveClass('active-class');
+      }
+    }, []);
+
     function upgrade(){
       if( points >= 10){
         setK(2)
@@ -32,13 +50,15 @@ import './App.css';
         setButtonClass('btn-class-disabled');
         setActive('Приобретено');
         setActiveClass('active-class');
+        y = 1
+        localStorage.setItem('activeStatus',JSON.stringify(y))
       }
     }
     
     function interval1s(){
       if( points >= 15){
         //if(!interval1sid){
-           interval1sid = setInterval(function(){
+          interval1sid = setInterval(function(){
             setPoints(prevPoints => prevPoints +1)
           }, 3000);
         //} else {
@@ -54,7 +74,7 @@ import './App.css';
 
     function interval5s(){
       if( points >= 30){
-           interval5sid = setInterval(function(){
+          interval5sid = setInterval(function(){
             setPoints(prevPoints => prevPoints +10)
           }, 5000);
           console.log('Нажал кнопку')
@@ -112,7 +132,7 @@ import './App.css';
 
 
       <div><h2>Кликай на печеньку!</h2></div>
-      <img className='image-class' id='img-cookie' src='cookie.png' onClick={clickImg}></img>
+      <img className='image-class' id='img-cookie' src='/public/cookie.webp' onClick={clickImg}></img>
        <div className='points-block'>
         Печеньки: {points}
         </div>
