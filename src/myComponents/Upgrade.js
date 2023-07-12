@@ -141,7 +141,7 @@ export const Upgrade = () => {
       </div>
     </div>
 
-      <div><h2>Кликай на печеньку!</h2></div>
+      <div className="clickClass"><h2>Кликай на печеньку!</h2></div>
       <img className='image-class' id='img-cookie' src={cookie} onClick={clickImg}></img>
         <div className='points-block'>
         Печеньки: {points}
