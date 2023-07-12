@@ -5,11 +5,10 @@ import {Upgrade} from './myComponents/Upgrade';
   let k=1
 
   function App() {
-    
   return (
 
     <div className='App'>
-    <Upgrade></Upgrade>
+      <Upgrade></Upgrade>
     </div>
   );
 }
