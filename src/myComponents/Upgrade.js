@@ -21,7 +21,6 @@ export const Upgrade = () => {
     
     function clickImg(){
       setPoints(points + k)
-      let summ = points + k
     }
 
     useEffect(() =>{
@@ -32,6 +31,9 @@ export const Upgrade = () => {
     
     useEffect(() => {
       setPoints(JSON.parse(localStorage.getItem('points')));
+      if(points === 0){
+        setPoints(0)
+      }
 
       if (JSON.parse(localStorage.getItem('activeStatus')) === true){
         setK(2)
@@ -77,7 +79,7 @@ export const Upgrade = () => {
       if( points >= 15){
           setPoints(prevPoints => prevPoints - 15)
           interval1sid = setInterval(function(){
-            setPoints(prevPoints => prevPoints +1)
+            setPoints(prevPoints => prevPoints +1*k)
         }, 3000);
         setButtonDisabledGrandma(true);
         setButtonClassGrandma('btn-class-disabled');
@@ -91,7 +93,7 @@ export const Upgrade = () => {
       if( points >= 30){
         setPoints(prevPoints => prevPoints - 30)
           interval5sid = setInterval(function(){
-            setPoints(prevPoints => prevPoints +10)
+            setPoints(prevPoints => prevPoints +10*k)
         }, 5000);
           console.log('Нажал кнопку')
         setButtonDisabledFarm(true);
