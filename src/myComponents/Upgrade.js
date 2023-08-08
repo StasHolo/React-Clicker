@@ -16,24 +16,31 @@ export const Upgrade = () => {
     const [activeClassFarm, setActiveClassFarm] = useState('mini-discription')
     const [buttonDisabledFarm, setButtonDisabledFarm] = useState(false)
     const [k, setK] = useState(1)  
+    const [interval3s, setInterval3s] = useState(0);
+
     let interval1sid = null
     let interval5sid = null
     
     function clickImg(){
-      setPoints(points + k)
+      setPoints(points + k)    //Кликаем печеньку
     }
 
     useEffect(() =>{
       if (points != 0){
-      localStorage.setItem('points', JSON.stringify(points))
+      localStorage.setItem('points', JSON.stringify(points)) //Записываем кол-во печенек в Local
       }
     }, [points])
-    
+
     useEffect(() => {
       setPoints(JSON.parse(localStorage.getItem('points')));
-      if(points === 0){
+      console.log('localStorage points = ', localStorage.getItem('points')) //Выводим 0 печенек
+      if(localStorage.getItem('points') === null){
+        //console.log('Локал сторэйдж равен нулл')
         setPoints(0)
       }
+    }, [])
+    
+    useEffect(() => {       // Восстанавливаем сохранения
 
       if (JSON.parse(localStorage.getItem('activeStatus')) === true){
         setK(2)
@@ -43,17 +50,25 @@ export const Upgrade = () => {
         setActiveClass('active-class');
       }
       if (JSON.parse(localStorage.getItem('activeStatusGrandma')) === true){
+        clearInterval(interval1sid);
+          
+          interval1sid = setInterval(function(){
+            setPoints(prevPoints => prevPoints +1*k)
+        }, 3000);
+        
+
+        /*clearInterval(interval1sid);
         interval1sid = setInterval(function(){
-            setPoints(prevPoints => prevPoints +1)
+            setPoints(prevPoints => prevPoints +1*k)
           }, 3000);
         setButtonDisabledGrandma(true);
         setButtonClassGrandma('btn-class-disabled');
         setActiveGrandma('Приобретено');
-        setActiveClassGrandma('active-class');
+        setActiveClassGrandma('active-class');*/
       }
       if (JSON.parse(localStorage.getItem('activeStatusFarm')) === true){
         interval5sid = setInterval(function(){
-            setPoints(prevPoints => prevPoints +10)
+            setPoints(prevPoints => prevPoints +10*k)
           }, 5000);
           console.log('Нажал кнопку')
         setButtonDisabledFarm(true);
@@ -61,7 +76,7 @@ export const Upgrade = () => {
         setActiveFarm('Приобретено');
         setActiveClassFarm('active-class');
       }
-    }, []);
+    }, [k]);
 
     function upgrade(){
       if( points >= 10){
@@ -76,17 +91,22 @@ export const Upgrade = () => {
     }
     
     function interval1s(){
+      clearInterval(interval1sid);
       if( points >= 15){
           setPoints(prevPoints => prevPoints - 15)
           interval1sid = setInterval(function(){
             setPoints(prevPoints => prevPoints +1*k)
         }, 3000);
+        
         setButtonDisabledGrandma(true);
         setButtonClassGrandma('btn-class-disabled');
         setActiveGrandma('Приобретено');
         setActiveClassGrandma('active-class');
         localStorage.setItem('activeStatusGrandma',JSON.stringify(true))
-      }
+        
+    }
+      
+      //return () => clearInterval(myInterval3s);
     }
 
     function interval5s(){
@@ -104,13 +124,26 @@ export const Upgrade = () => {
       }
     }
 
+    /*function intervalHandler() {
+      if (JSON.parse(localStorage.getItem('activeStatusGrandma')) === true) {
+        setPoints(prevPoints => prevPoints + 1 * k);
+      } else if (JSON.parse(localStorage.getItem('activeStatus')) === true) {
+        setPoints(prevPoints => prevPoints + 2 * k);
+      } else {
+        setPoints(prevPoints => prevPoints + k);
+      }
+    }
+
     useEffect(() => {
+      if (interval1sid) {
+        clearInterval(interval1sid);
+      }
+
+      interval1sid = setInterval(intervalHandler, 3000);
       return () => {
-        if (interval1sid) {
-          clearInterval(interval1sid);
-        }
+        clearInterval(interval1sid);
       };
-    }, []);
+    }, [k, points]); */
   
   return(
     <div>
