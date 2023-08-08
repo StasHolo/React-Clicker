@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/React-Clicker/static/css/main.91dccaba.css",
-    "main.js": "/React-Clicker/static/js/main.46624f30.js",
+    "main.js": "/React-Clicker/static/js/main.1266e51e.js",
     "static/js/787.fcdf962a.chunk.js": "/React-Clicker/static/js/787.fcdf962a.chunk.js",
     "static/media/cookie.webp": "/React-Clicker/static/media/cookie.863df8b645de06cc6ab1.webp",
     "index.html": "/React-Clicker/index.html",
     "main.91dccaba.css.map": "/React-Clicker/static/css/main.91dccaba.css.map",
-    "main.46624f30.js.map": "/React-Clicker/static/js/main.46624f30.js.map",
+    "main.1266e51e.js.map": "/React-Clicker/static/js/main.1266e51e.js.map",
     "787.fcdf962a.chunk.js.map": "/React-Clicker/static/js/787.fcdf962a.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.91dccaba.css",
-    "static/js/main.46624f30.js"
+    "static/js/main.1266e51e.js"
   ]
 }
