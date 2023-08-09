@@ -17,6 +17,7 @@ export const Upgrade = () => {
     const [buttonDisabledFarm, setButtonDisabledFarm] = useState(false)
     const [k, setK] = useState(1)  
     const [interval3s, setInterval3s] = useState(0);
+    const [interval5s, setInterval5s] = useState(0);
 
     let interval1sid = null
     let interval5sid = null
@@ -50,35 +51,34 @@ export const Upgrade = () => {
         setActiveClass('active-class');
       }
       if (JSON.parse(localStorage.getItem('activeStatusGrandma')) === true){
-        clearInterval(interval1sid);
+        clearInterval(interval3s);
           
-          interval1sid = setInterval(function(){
+          const newInterval = setInterval(function(){
             setPoints(prevPoints => prevPoints +1*k)
+            console.log('+ печенька после перезагрузки либо изменения k')
         }, 3000);
-        
+        setInterval3s(newInterval);
 
-        /*clearInterval(interval1sid);
-        interval1sid = setInterval(function(){
-            setPoints(prevPoints => prevPoints +1*k)
-          }, 3000);
         setButtonDisabledGrandma(true);
         setButtonClassGrandma('btn-class-disabled');
         setActiveGrandma('Приобретено');
-        setActiveClassGrandma('active-class');*/
+        setActiveClassGrandma('active-class')
+
       }
       if (JSON.parse(localStorage.getItem('activeStatusFarm')) === true){
-        interval5sid = setInterval(function(){
+        clearInterval(interval5s);
+        const newInterval2 = setInterval(function(){
             setPoints(prevPoints => prevPoints +10*k)
           }, 5000);
-          console.log('Нажал кнопку')
+        setInterval5s(newInterval2);
         setButtonDisabledFarm(true);
         setButtonClassFarm('btn-class-disabled');
         setActiveFarm('Приобретено');
         setActiveClassFarm('active-class');
       }
-    }, [k]);
+    }, [k, setInterval3s]);
 
-    function upgrade(){
+    function upgrade(){         //Увеличивает весьдоход в 2 раза
       if( points >= 10){
         setPoints(prevPoints => prevPoints - 10)
         setK(2)
@@ -90,32 +90,33 @@ export const Upgrade = () => {
       }
     }
     
-    function interval1s(){
-      clearInterval(interval1sid);
+    function interval1s(){     // Дает печеньки раз в 3 секунды
+      clearInterval(interval3s);
       if( points >= 15){
           setPoints(prevPoints => prevPoints - 15)
-          interval1sid = setInterval(function(){
+          const newInterval = setInterval(function(){
             setPoints(prevPoints => prevPoints +1*k)
+            console.log('+1 печенье раз в 3 секунды')
         }, 3000);
+
+        setInterval3s(newInterval);
         
         setButtonDisabledGrandma(true);
         setButtonClassGrandma('btn-class-disabled');
         setActiveGrandma('Приобретено');
         setActiveClassGrandma('active-class');
-        localStorage.setItem('activeStatusGrandma',JSON.stringify(true))
-        
-    }
-      
-      //return () => clearInterval(myInterval3s);
+        localStorage.setItem('activeStatusGrandma',JSON.stringify(true)) 
+    } 
     }
 
-    function interval5s(){
+    function interval5sec(){    // Дает печеньки раз в 5 секунд
+      clearInterval(interval5s);
       if( points >= 30){
         setPoints(prevPoints => prevPoints - 30)
-          interval5sid = setInterval(function(){
+          const newInterval2 = setInterval(function(){
             setPoints(prevPoints => prevPoints +10*k)
         }, 5000);
-          console.log('Нажал кнопку')
+        setInterval5s(newInterval2);
         setButtonDisabledFarm(true);
         setButtonClassFarm('btn-class-disabled');
         setActiveFarm('Приобретено');
@@ -124,26 +125,6 @@ export const Upgrade = () => {
       }
     }
 
-    /*function intervalHandler() {
-      if (JSON.parse(localStorage.getItem('activeStatusGrandma')) === true) {
-        setPoints(prevPoints => prevPoints + 1 * k);
-      } else if (JSON.parse(localStorage.getItem('activeStatus')) === true) {
-        setPoints(prevPoints => prevPoints + 2 * k);
-      } else {
-        setPoints(prevPoints => prevPoints + k);
-      }
-    }
-
-    useEffect(() => {
-      if (interval1sid) {
-        clearInterval(interval1sid);
-      }
-
-      interval1sid = setInterval(intervalHandler, 3000);
-      return () => {
-        clearInterval(interval1sid);
-      };
-    }, [k, points]); */
   
   return(
     <div>
@@ -169,7 +150,7 @@ export const Upgrade = () => {
       </div>
       <br></br>
       <div>
-        <button onClick={interval5s} disabled={buttonDisabledFarm}  className={buttonClassFarm}> Ферма печенек </button>
+        <button onClick={interval5sec} disabled={buttonDisabledFarm}  className={buttonClassFarm}> Ферма печенек </button>
         <div className='discription'>Каждые 5 секунд продает 10 печенек</div>
         <div className='mini-discription'>Стоимость: 30 монет</div>
         <div className={activeClassFarm}>{activeFarm}</div>
